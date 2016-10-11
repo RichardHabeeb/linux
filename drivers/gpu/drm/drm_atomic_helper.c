@@ -3187,6 +3187,8 @@ __drm_atomic_helper_connector_duplicate_state(struct drm_connector *connector,
 	memcpy(state, connector->state, sizeof(*state));
 	if (state->crtc)
 		drm_connector_reference(connector);
+	if (state->fb)
+		drm_framebuffer_reference(state->fb);
 }
 EXPORT_SYMBOL(__drm_atomic_helper_connector_duplicate_state);
 
@@ -3314,6 +3316,8 @@ __drm_atomic_helper_connector_destroy_state(struct drm_connector_state *state)
 	 */
 	if (state->crtc)
 		drm_connector_unreference(state->connector);
+	if (state->fb)
+		drm_framebuffer_unreference(state->fb);
 }
 EXPORT_SYMBOL(__drm_atomic_helper_connector_destroy_state);
 
